@@ -1,4 +1,10 @@
-.cache
-package.json
-package-lock.json
-public
+lib/
+node_modules/
+coverage/
+build/
+out/
+public/
+.cache/
+**/aggregated-translations/*.*
+README.md
+build_output/

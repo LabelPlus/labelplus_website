@@ -1,77 +1,88 @@
 module.exports = {
-  plugins: [
-    {
-      resolve: '@antv/gatsby-theme-antv',
-      options: {}
-    }
-  ],
   siteMetadata: {
-    title: 'AntV',
-    description: 'Gatsby starter of antv theme',
-    siteUrl: 'https://gatsby-starter-theme-antv.antv.vision',
-    githubUrl: 'https://github.com/antvis/antvis.github.io',
-    navs: [
-      {
-        slug: 'docs/specification/getting-started',
-        title: {
-          zh: '设计语言',
-          en: 'Specification'
-        }
+    title: 'LabelPlus Tookit',
+  },
+  plugins: [
+    `gatsby-plugin-typescript`,
+    `gatsby-plugin-react-helmet`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `images`,
+        path: `${__dirname}/src/images`,
       },
-      {
-        slug: 'examples',
-        title: {
-          zh: '图表演示',
-          en: 'Examples'
-        }
-      },
-      {
-        slug: 'independent',
-        title: {
-          zh: '独立',
-          en: 'MyApp'
-        }
-        // target: '_blank',
-      }
-    ],
-    docs: [
-      {
-        slug: 'specification/category',
-        title: {
-          zh: '分类一',
-          en: 'category1'
-        },
-        order: 4
-      },
-      {
-        slug: 'specification/category/three',
-        title: {
-          zh: '第三层',
-          en: 'three level'
-        },
-        order: 2
-      }
-    ],
-    examples: [
-      {
-        slug: 'category',
-        icon: 'pie',
-        title: {
-          zh: '饼图分类',
-          en: 'Category'
-        }
-      }
-    ],
-    showSearch: false, // 是否展示搜索框
-    showChinaMirror: false, // 是否展示国内镜像链接
-    showAntVProductsCard: false, // 是否展示 AntV 系列产品的卡片链接
-    showLanguageSwitcher: true, // 用于定义是否展示语言切换
-    showGithubCorner: true, // 是否展示角落的 GitHub 图标
-    playground: {
-      container: '<div id="container" />',
-      playgroundDidMount: 'console.log("playgroundDidMount");',
-      playgroundWillUnmount: 'console.log("playgroundWillUnmount");'
     },
-    redirects: []
-  }
-};
+    `gatsby-transformer-json`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `menuItems`,
+        path: `${__dirname}/src/menuItems`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `sidebar`,
+        path: `${__dirname}/src/sidebar`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `contents`,
+        path: `${__dirname}/contents`,
+      },
+    },
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`,
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: 'gatsby-starter-markdown',
+        short_name: 'starter',
+        start_url: '/',
+        background_color: '#663399',
+        theme_color: '#663399',
+        display: 'minimal-ui',
+        icon: 'src/images/gatsby-icon.png', // This path is relative to the root of the site.
+      },
+    },
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        defaultLayouts: {
+          default: require.resolve('./src/Layout.tsx'),
+        },
+        extensions: ['.mdx', '.md'],
+        // workaround: https://github.com/gatsbyjs/gatsby/issues/16422#issuecomment-518985316
+        plugins: [`gatsby-remark-autolink-headers`],
+        gatsbyRemarkPlugins: [
+          `gatsby-remark-katex`,
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 1035,
+            },
+          },
+          `gatsby-remark-autolink-headers`,
+          {
+            resolve: `gatsby-remark-prismjs`,
+            options: {
+              classPrefix: 'language-',
+              inlineCodeMarker: null,
+              showLineNumbers: true,
+              noInlineHighlight: false,
+            },
+          },
+        ],
+      },
+    },
+    `gatsby-plugin-remove-trailing-slashes`,
+    // this (optional) plugin enables Progressive Web App + Offline functionality
+    // To learn more, visit: https://gatsby.app/offline
+    // 'gatsby-plugin-offline',
+  ],
+  /// this must match the path your webpage is displayed from
+  pathPrefix: process.env.NODE_ENV === 'development' ? '' : '/gatsby-antd-docs',
+}

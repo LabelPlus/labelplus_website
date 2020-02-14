@@ -1,45 +1,69 @@
 {
-  "name": "gatsby-starter-theme-antv",
-  "private": true,
-  "version": "1.0.0",
-  "license": "MIT",
-  "homepage": "https://gatsby-starter-theme-antv.antv.vision",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/antvis/gatsby-starter-theme-antv"
-  },
-  "bugs": {
-    "url": "https://github.com/antvis/gatsby-starter-theme-antv/issues"
-  },
-  "scripts": {
-    "start": "npm run develop",
-    "develop": "gatsby develop -H 0.0.0.0 --open",
-    "build": "gatsby build --prefix-paths",
-    "deploy": "npm run build && gh-pages -d public",
-    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
-    "serve": "gatsby serve",
-    "clean": "gatsby clean",
-    "pretty-quick": "pretty-quick",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
-  },
+  "name": "gatsby-antd-docs",
+  "description": "Gatsby Antd Docs Starter",
+  "version": "0.1.0",
+  "author": "Jannik Buschke",
   "dependencies": {
-    "@antv/g2": "^3.5.9",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "@mdx-js/mdx": "1.4.4",
+    "@mdx-js/react": "1.4.4",
+    "@mdx-js/tag": "0.20.3",
+    "antd": "3.23.1",
+    "gatsby": "2.13.65",
+    "gatsby-cli": "2.7.44",
+    "gatsby-image": "2.2.17",
+    "gatsby-plugin-manifest": "2.2.14",
+    "gatsby-plugin-mdx": "1.0.39",
+    "gatsby-plugin-offline": "3.0.3",
+    "gatsby-plugin-react-helmet": "3.1.6",
+    "gatsby-plugin-sharp": "2.2.20",
+    "gatsby-plugin-typescript": "2.1.6",
+    "gatsby-remark-autolink-headers": "2.1.9",
+    "gatsby-remark-images": "3.1.20",
+    "gatsby-remark-katex": "3.1.7",
+    "gatsby-remark-prismjs": "3.3.12",
+    "gatsby-source-filesystem": "2.1.21",
+    "gatsby-transformer-json": "2.2.7",
+    "gatsby-transformer-remark": "^2.6.21",
+    "gatsby-transformer-sharp": "2.2.13",
+    "katex": "0.11.0",
+    "prismjs": "1.17.1",
+    "react": "16.9.0",
+    "react-dom": "16.9.0",
+    "react-helmet": "5.2.1",
+    "react-responsive": "6.1.1",
+    "react-sizeme": "2.6.7"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all",
+    "last 1 chrome version",
+    "last 1 firefox version",
+    "last 1 safari version"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build --prefix-paths",
+    "develop": "gatsby develop",
+    "start": "npm run develop",
+    "format": "prettier --write \"./**/*.[jt]s?(x)\" \"./**/*.md\" \"./**/*.json\"",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "gatsby build --prefix-paths && gh-pages -d public"
   },
   "devDependencies": {
-    "@antv/gatsby-theme-antv": "^0.10.17",
-    "@types/react": "^16.9.2",
-    "@types/react-dom": "^16.9.0",
-    "gatsby": "^2.15.34",
-    "gh-pages": "^2.1.1",
-    "husky": "^3.1.0",
-    "prettier": "^1.19.1",
-    "pretty-quick": "^2.0.1"
+    "gatsby-plugin-remove-trailing-slashes": "2.1.5",
+    "gh-pages": "2.1.1",
+    "prettier": "1.18.2",
+    "@types/node": "12.7.4",
+    "@types/react": "16.9.2",
+    "@types/react-dom": "16.9.0",
+    "@types/react-helmet": "5.0.9"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jannikbuschke/gatsby-antd-docs"
   }
 }

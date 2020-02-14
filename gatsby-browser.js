@@ -1,3 +1,4 @@
-window.g2 = require('@antv/g2');
-window.react = require('react');
-window.reactDom = require('react-dom');
+// gatsby-browser.js
+require('prismjs/themes/prism-coy.css')
+require('antd/dist/antd.css')
+require(`katex/dist/katex.min.css`)
