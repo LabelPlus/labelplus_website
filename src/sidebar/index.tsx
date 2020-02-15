@@ -1,5 +1,6 @@
 import React from 'react'
-import { graphql, StaticQuery, Link } from 'gatsby'
+import { graphql, StaticQuery } from 'gatsby'
+import { Link } from 'gatsby-theme-localization'
 import { Affix, Menu } from 'antd'
 import 'antd/lib/menu/style/css'
 import { pathPrefix } from '../../gatsby-config'

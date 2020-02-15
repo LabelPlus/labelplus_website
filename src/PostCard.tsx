@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'gatsby'
+import { Link } from 'gatsby-theme-localization'
 import Card from 'antd/lib/card'
 import 'antd/lib/card/style/css'
 

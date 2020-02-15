@@ -3,6 +3,31 @@ module.exports = {
     title: 'LabelPlus Tookit',
   },
   plugins: [
+    {
+      resolve: `gatsby-theme-localization`,
+      options: {
+        languages: ['en', 'zh'],
+        namespaces: ['global'],
+        localesDir: './locale',
+        allowIndex: false,
+        defaultLng: 'en',
+        suspenseFallback: require.resolve(`./src/components/fallback`),
+        i18next: {
+          // whatever you want to pass to react-i18next
+          fallbackLng: 'en',
+          react: {
+            wait: true,
+            useSuspense: true
+          },
+          debug: process.env.NODE_ENV !== 'production'
+        },
+        i18nPlugin: {
+          // whatever you want to pass to gatsby-plugin-i18n
+          langKeyDefault: 'en',
+          useLangKeyLayout: false
+        }
+      }
+    },
     `gatsby-plugin-typescript`,
     `gatsby-plugin-react-helmet`,
     {
