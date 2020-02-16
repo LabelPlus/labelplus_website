@@ -1,6 +1,6 @@
 import React from 'react'
 import Helmet from 'react-helmet'
-import { RootLayout } from './Layout'
+import { RootLayout } from './RootLayout'
 
 export const CenterLayout = ({ children }: any) => {
   return (

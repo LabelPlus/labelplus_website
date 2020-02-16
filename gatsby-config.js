@@ -77,7 +77,7 @@ module.exports = {
       resolve: `gatsby-plugin-mdx`,
       options: {
         defaultLayouts: {
-          default: require.resolve('./src/Layout.tsx'),
+          default: require.resolve('./src/RootLayout.tsx'),
         },
         extensions: ['.mdx', '.md'],
         // workaround: https://github.com/gatsbyjs/gatsby/issues/16422#issuecomment-518985316

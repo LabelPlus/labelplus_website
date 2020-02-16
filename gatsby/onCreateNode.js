@@ -1,5 +1,15 @@
-const replacePath = require('./utils')
 const { createFilePath } = require(`gatsby-source-filesystem`)
+
+function replacePath (path) {
+  var regex =/(.*)\.(\w+)\/?$/;
+  if (regex.test(path)) {
+    const f = path.match(regex);
+    return "/" + f[2] + f[1];
+  }
+  else {
+    return "/en" + path;
+  }
+}
 
 module.exports = exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions
