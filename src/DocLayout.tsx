@@ -21,71 +21,28 @@ export function DocLayout({ children, sidebarRoot }: any) {
     //   <html lang="en" />
     // </Helmet>
 
-    <StaticQuery
-      query={graphql`
-        query SiteTitleQuery {
-          site {
-            siteMetadata {
-              title
-            }
-          }
-          allMdx {
-            edges {
-              node {
-                fields {
-                  slug
-                }
-              }
-            }
-          }
-        }
-      `}
-      render={data => {
-        const allPosts = data.allMdx.edges.map(
-          (edge: any) => edge.node.fields.slug
-        )
-        let onPostPage
-        if (typeof window !== 'undefined') {
-          const path = window.location.pathname.replace(
-            pathPrefix.slice(0, -1),
-            ''
-          )
-          if (
-            allPosts.indexOf(path) >= 0 ||
-            allPosts.indexOf(path.slice(0, -1)) >= 0
-          ) {
-            onPostPage = true
-          } else {
-            onPostPage = false
-          }
-        }
-
-        return (
-          <RootLayout>
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'auto 1fr auto',
-                height: '100%',
-              }}
-            >
-              <Sidebar root={sidebarRoot} />
-              <Layout>
-                <Content
-                  style={{
-                    background: '#fff',
-                    padding: 24,
-                    margin: 0,
-                  }}
-                >
-                  {children}
-                </Content>
-              </Layout>
-              <TableOfContents />
-            </div>
-          </RootLayout>
-        )
-      }}
-    />
+    <RootLayout>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'auto 1fr auto',
+          height: '100%',
+        }}
+      >
+        <Sidebar root={sidebarRoot} />
+        <Layout>
+          <Content
+            style={{
+              background: '#fff',
+              padding: 24,
+              margin: 0,
+            }}
+          >
+            {children}
+          </Content>
+        </Layout>
+        <TableOfContents />
+      </div>
+    </RootLayout>
   )
 }
