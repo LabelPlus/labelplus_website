@@ -1,0 +1,50 @@
+[
+	{
+		"lang": "zh",
+		"data": [
+			{
+				"name": "docs",
+				"title": "文档",
+				"link": "/docs/refer",
+				"items": [
+					{
+						"name": "get-started",
+						"title": "快速入门"
+					},
+					{
+						"name": "refer",
+						"title": "参考手册"
+					}
+				]
+			},
+			{
+				"name": "blog",
+				"title": "博客"
+			}
+		]
+	},
+	{
+		"lang": "en",
+		"data": [
+			{
+				"name": "docs",
+				"title": "Docs",
+				"link": "/docs/refer",
+				"items": [
+					{
+						"name": "get-started",
+						"title": "Get Started"
+					},
+					{
+						"name": "refer",
+						"title": "References"
+					}
+				]
+			},
+			{
+				"name": "blog",
+				"title": "Blog"
+			}
+		]
+	}
+]

@@ -13,7 +13,8 @@ module.exports = exports.createPages = ({ actions, graphql }) => {
           node {
             id
             fields {
-              slug
+              path
+              i18n_path
             }
           }
         }
@@ -25,7 +26,7 @@ module.exports = exports.createPages = ({ actions, graphql }) => {
     }
     result.data.allMdx.edges.forEach(({ node }) => {
       createPage({
-        path: node.fields.slug,
+        path: node.fields.i18n_path,
         component: Template,
         context: { id: node.id }, // additional data can be passed via context
       })

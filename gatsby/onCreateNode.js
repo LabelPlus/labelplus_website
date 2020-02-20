@@ -1,6 +1,17 @@
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
-function replacePath (path) {
+// "/docs/get-started/syntax-highlighting/" -> "/get-started/"
+function getContentGroup(path) {
+  var a = path.split('/');
+  var tmp = "/";
+  for (var i = 2; i < a.length - 2; i++) {
+    tmp += a[i] + "/";
+  }
+  return tmp;
+}
+
+// "/docs/get-started/syntax-highlighting/" -> "/en/get-started/syntax-highlighting/"
+function getI18nPath (path) {
   var regex =/(.*)\.(\w+)\/?$/;
   if (regex.test(path)) {
     const f = path.match(regex);
@@ -14,22 +25,38 @@ function replacePath (path) {
 module.exports = exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions
   if (node.internal.type === `MarkdownRemark`) {
-    const slug = createFilePath({ node, getNode, basePath: `pages` })
+    const path = createFilePath({ node, getNode, basePath: `pages` })
     createNodeField({
       node,
-      name: `slug`,
-      value: replacePath(slug),
+      name: `path`,
+      value: path,
+    })
+    createNodeField({
+      node,
+      name: `i18n_path`,
+      value: getI18nPath(path),
+    })
+    createNodeField({
+      node,
+      name: `content_group`,
+      value: getContentGroup(path),
     })
   } else if (node.internal.type === 'Mdx') {
-    const value = createFilePath({ node, getNode })
+    const path = createFilePath({ node, getNode })
     createNodeField({
-      // Name of the field you are adding
-      name: 'slug',
-      // Individual MDX node
       node,
-      // Generated value based on filepath with "blog" prefix
-      // value: `/blog${value}`,
-      value: replacePath(value),
+      name: 'path',
+      value: path,
+    })
+    createNodeField({
+      node,
+      name: `i18n_path`,
+      value: getI18nPath(path),
+    })
+    createNodeField({
+      node,
+      name: `content_group`,
+      value: getContentGroup(path),
     })
   }
 }

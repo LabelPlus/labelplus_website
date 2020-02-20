@@ -4,77 +4,124 @@ import { Link } from 'gatsby-theme-localization'
 import { Affix, Menu } from 'antd'
 import 'antd/lib/menu/style/css'
 import { pathPrefix } from '../../gatsby-config'
+import {useTranslation} from 'react-i18next'
 
-interface LinkItem {
-  id: string
+//note: for "/docs" only, need fix
+
+interface NodeItem {
   name: string
-  link: string
+  title: string
+  link: string | null
+  items: NodeItem[] | null
 }
-interface ParentItem {
+interface ContentItem {
   id: string
-  name: string
-  items: MenuItem[] | null
+  lang: string
+  data: NodeItem[] | null
+}
+interface MdxItem {
+  frontmatter: { root: string, title: string },
+  fields: { path: string, i18n_path: string, content_group: string }
 }
 
-type MenuItem = LinkItem | ParentItem
-
-type Query = { allSidebarJson: { edges: { node: MenuItem }[] } }
-
-function isLinkItem(item: MenuItem): item is LinkItem {
-  const result = Boolean((item as LinkItem).link)
-  return result
-}
-
-function render(item: MenuItem, id: string) {
-  if (isLinkItem(item)) {
-    return (
-      <Menu.Item key={item.link}>
-        <Link to={item.link}>
-          <div>
-            {item.name}
-          </div>
-        </Link>
-      </Menu.Item>
-    )
-  } else {
-    return (
-      <Menu.SubMenu
-        key={id}
-        title={<span style={{ fontWeight: 900 }}>{item.name}</span>}
-      >
-        {item.items && item.items.map((v, i) => render(v, id + '.' + i))}
-      </Menu.SubMenu>
-    )
+type Query = {
+  allContentsJson: {
+    edges: { node: ContentItem }[]
+  }
+  allMdx: {
+    edges: { node: MdxItem }[]
   }
 }
 
-export function Sidebar() {
+function for_each_mdx_item(item: MdxItem) {
+  return (
+    <Menu.Item key={item.fields.i18n_path}>
+      <Link to={item.fields.path}>
+        <div>
+          {item.frontmatter.title}
+        </div>
+      </Link>
+    </Menu.Item>
+  )
+}
+
+function render_links(content_group: string, data: Query) {
+  return (
+          data.allMdx.edges
+            .filter(i => i.node.fields.content_group == content_group)
+            .map(v => for_each_mdx_item(v.node))
+  )
+}
+
+function render_node_item(item: NodeItem, id: string, content_group: string, data: Query) {
+  content_group += item.name + "/";
+  return (
+    <Menu.SubMenu
+      key={id}
+      title={<span style={{ fontWeight: 900 }}>{item.title}</span>}
+    >
+      {item.items && item.items.map((v, i) => render_node_item(v, id + '.' + i, content_group, data))}
+      { render_links(content_group, data) }
+
+    </Menu.SubMenu>
+  )
+}
+
+export function Sidebar(root: any) {
+  const {t, i18n} = useTranslation();
+
   return (
     <StaticQuery
       query={graphql`
-        query MyQuery {
-          allSidebarJson {
-            edges {
-              node {
-                id
-                name
-                link
+      query MyQuery {
+        allContentsJson {
+          edges {
+            node {
+              lang
+              data {
                 items {
+                  title
                   name
-                  link
                 }
+                link
+                name
+                title
               }
+              id
             }
           }
         }
+        allMdx(filter: {frontmatter: {root: {eq: "/docs"}}}) {
+          edges {
+            node {
+              frontmatter {
+                root
+                title
+              }
+              fields {
+                path
+                i18n_path
+                content_group
+              }
+              id
+            }
+          }
+        }
+      }
       `}
-      render={(data: Query) => {
-        const rootItems = data.allSidebarJson.edges.map(v => v.node)
+    render={(data: Query) => {
+        const curLangData = data.allContentsJson.edges
+          .map(v => v.node)
+          .filter(v => (v.lang == i18n.language && v.data !== null))[0].data;
+        if (curLangData == null) return ([]);
+        const docsItems = curLangData
+          .filter(v => v.name == 'docs' && v.items !== null)[0].items;
+        if (docsItems == null) return ([]);
         const currentPath =
           typeof window !== 'undefined'
             ? window.location.pathname.replace(pathPrefix, '')
             : '/'
-        const defaultOpenKeys = rootItems.map(item => item.id)
+        const defaultOpenKeys = docsItems.map(v => v.name)
         return (
           <Affix>
             <Menu
@@ -83,7 +130,7 @@ export function Sidebar() {
               defaultOpenKeys={defaultOpenKeys}
               selectedKeys={[currentPath]}
             >
-              {rootItems.map(v => render(v, v.id))}
+              { docsItems.map(v => render_node_item(v, v.name, '/', data)) }
             </Menu>
           </Affix>
         )
