@@ -10,11 +10,11 @@ module.exports = {
         namespaces: ['global'],
         localesDir: './locale',
         allowIndex: false,
-        defaultLng: 'en',
+        defaultLng: 'zh',
         suspenseFallback: require.resolve(`./src/components/fallback`),
         i18next: {
           // whatever you want to pass to react-i18next
-          fallbackLng: 'en',
+          fallbackLng: 'zh',
           react: {
             wait: true,
             useSuspense: true
@@ -23,7 +23,7 @@ module.exports = {
         },
         i18nPlugin: {
           // whatever you want to pass to gatsby-plugin-i18n
-          langKeyDefault: 'en',
+          langKeyDefault: 'zh',
           useLangKeyLayout: false
         }
       }

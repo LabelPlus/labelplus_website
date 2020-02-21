@@ -18,7 +18,7 @@ function getI18nPath (path) {
     return "/" + f[2] + f[1];
   }
   else {
-    return "/en" + path;
+    return "/zh" + path;
   }
 }
 
